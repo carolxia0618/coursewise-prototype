@@ -7,21 +7,22 @@ const state = {
   draft: null,
   picker: null,
   addedPlan: null,
+  showPlanConfirmation: false,
   calendarMonth: new Date(2026, 9, 1),
 };
 
 const data = {
   plans: [
-    { id: "prototype", when: "Today · 7:00–8:00 PM", title: "Prototype critique", copy: "Finish interaction flow and annotations · 60 min", warning: false },
-    { id: "deadline", when: "Tomorrow · 11:59 PM", title: "Prototype critique", copy: "Interaction Design · About 2 hours remaining", warning: true },
-    { id: "portfolio", when: "Friday · 3:00–4:30 PM", title: "Portfolio case study", copy: "Draft the problem framing and add two process images" },
-    { id: "reading", when: "Monday · 6:00–6:45 PM", title: "Research methods reading", copy: "Read chapter 6 and capture three discussion notes" },
+    { id: "prototype", type: "Planned work", course: "DES 220 · Interaction Design", when: "Today · 7:00–8:00 PM", title: "Prototype critique", copy: "Finish interaction flow and annotations · 60 min" },
+    { id: "deadline", type: "Due", course: "DES 220 · Interaction Design", when: "Tomorrow · 11:59 PM", title: "Prototype critique", copy: "Submission deadline · About 2 hours remaining", warning: true },
+    { id: "portfolio", type: "Planned work", course: "DES 230 · Portfolio Studio", when: "Friday · 3:00–4:30 PM", title: "Portfolio case study", copy: "Draft the problem framing and add two process images" },
+    { id: "reading", type: "Planned work", course: "DES 240 · Design Research", when: "Monday · 6:00–6:45 PM", title: "Research methods reading", copy: "Read chapter 6 and capture three discussion notes" },
   ],
   grades: [
-    { id: "research", title: "Research synthesis", score: "84 / 100", copy: "Interaction Design · 3 comments ready" },
-    { id: "quiz", title: "Usability quiz", score: "18 / 20", copy: "Interaction Design · No comments" },
-    { id: "journey", title: "Journey map critique", score: "92 / 100", copy: "Service Design · 1 instructor comment" },
-    { id: "participation", title: "Studio participation", score: "10 / 10", copy: "Interaction Design · No comments" },
+    { id: "research", posted: "Posted Oct 5", course: "DES 220 · Interaction Design", title: "Research synthesis", score: "84 / 100", copy: "3 comments ready" },
+    { id: "quiz", posted: "Posted Oct 3", course: "DES 220 · Interaction Design", title: "Usability quiz", score: "18 / 20", copy: "No comments" },
+    { id: "journey", posted: "Posted Sep 29", course: "DES 240 · Design Research", title: "Journey map critique", score: "92 / 100", copy: "1 instructor comment" },
+    { id: "participation", posted: "Posted Sep 26", course: "DES 210 · Visual Systems", title: "Studio participation", score: "10 / 10", copy: "No comments" },
   ],
 };
 
@@ -30,20 +31,20 @@ function back() { state.screen = state.history.pop() || "today"; render(); }
 function header(title, backLabel) { return `<header class="header">${backLabel ? `<button class="back" data-action="back">‹ ${backLabel}</button>` : ""}<div class="brand">${logo}<span>Coursewise</span></div><h1>${title}</h1></header>`; }
 function nav(active) { return `<nav class="nav" aria-label="Primary">${["Today","Plan","Grades","Courses"].map(label => `<button data-tab="${label.toLowerCase()}" class="${active===label.toLowerCase()?"active":""}">${label}</button>`).join("")}</nav>`; }
 function screen(body, active) { return `<div class="shell"><section class="phone"><div class="screen">${body}</div>${active ? nav(active) : ""}</section><aside class="desktop-note">Interactive Coursewise student prototype</aside></div>`; }
-function card(item, kind) { return `<button class="card" data-${kind}="${item.id}"><span class="eyebrow ${item.warning?"warning":""}">${item.when || "Posted recently"}</span><div class="card-title">${item.title}</div>${item.score?`<div class="metric">${item.score}</div>`:""}<div class="card-copy">${item.copy}</div></button>`; }
+function card(item, kind) { return `<button class="card" data-${kind}="${item.id}">${item.type?`<span class="type-badge ${item.warning?"due":"planned"}">${item.type}</span>`:""}<span class="eyebrow ${item.warning?"warning":""}">${item.when || item.posted}</span>${item.course?`<div class="course-label">${item.course}</div>`:""}<div class="card-title">${item.title}</div>${item.score?`<div class="metric">${item.score}</div>`:""}<div class="card-copy">${item.copy}</div></button>`; }
 
 const views = {
   today: () => screen(`${header("Good afternoon, Jamie")}<p class="lede">Here’s what changed and what deserves your attention.</p><div class="stack"><button class="card" data-action="grade"><span class="eyebrow">New grade</span><div class="course-label">DES 220 · Interaction Design</div><div class="card-title">Research synthesis</div><div class="metric">84 / 100</div><div class="card-copy">Your course grade changed from 88% to 86%.</div></button><button class="card" data-action="schedule"><span class="eyebrow warning">Due tomorrow</span><div class="course-label">DES 220 · Interaction Design</div><div class="card-title">Prototype critique</div><div class="card-copy">Due at 11:59 PM</div></button></div>`, "today"),
-  plan: () => { const plans=state.addedPlan?[state.addedPlan,...data.plans.filter(p=>p.id!=="prototype")]:data.plans; return screen(`${header("Plan")}<p class="lede">Your next seven days</p>${state.addedPlan?'<div class="plan-sync"><span>✓</span><div><strong>Schedule added</strong><p>Your new work session is saved in Coursewise Plan.</p></div></div>':''}<div class="stack">${plans.map(p=>card(p,"plan")).join("")}</div>`, "plan"); },
+  plan: () => { const plans=state.addedPlan?[state.addedPlan,...data.plans.filter(p=>p.id!=="prototype")]:data.plans; return screen(`${header("Plan")}<p class="lede">Your next seven days</p>${state.showPlanConfirmation?'<div class="plan-sync"><span>✓</span><div><strong>Schedule added</strong><p>Your new work session is saved in Coursewise Plan.</p></div></div>':''}<div class="stack">${plans.map(p=>card(p,"plan")).join("")}</div>`, "plan"); },
   grades: () => screen(`${header("Grades")}<p class="lede">Recent grades and feedback</p><div class="stack">${data.grades.map(g=>card(g,"grade-id")).join("")}</div>`, "grades"),
   courses: () => screen(`${header("Courses")}<div class="stack">${[["Interaction Design","DES 220 · 86% · 1 deadline tomorrow"],["Design Research","DES 240 · 92% · Nothing due this week"],["Visual Systems","DES 210 · 89% · Next deadline Friday"]].map(([a,b],i)=>`<button class="card" ${i===0?'data-action="course"':''}><div class="card-title">${a}</div><div class="card-copy">${b}</div></button>`).join("")}</div>`, "courses"),
   grade: () => screen(`${header("Research synthesis", "Grades")}<p class="lede">Interaction Design · Graded today</p><div class="card"><div class="metric">84 / 100</div><p class="card-copy">Your course grade changed from 88% to 86%.</p><div class="score-grid">${[["Research depth","22 / 25"],["Synthesis","19 / 25"],["Evidence","20 / 25"],["Presentation","23 / 25"]].map(x=>`<div class="score-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("")}</div></div><div class="actions"><button class="button primary" data-action="feedback">Review feedback</button></div>`),
-  feedback: () => screen(`${header("Your feedback", "Grade")}<p class="lede">Everything connected to this grade, in one place.</p><div class="stack"><div class="card"><span class="eyebrow">AI summary</span><p class="card-copy">Your research is strong. Connect evidence more explicitly to each insight.</p></div><div class="card"><span class="eyebrow">Instructor comment</span><p class="card-copy">“Show which observations support each conclusion.”</p></div></div><div class="actions"><button class="button primary" data-action="laptop">Open in Coursewise for laptop</button></div>`),
+  feedback: () => screen(`${header("Your feedback", "Grade")}<p class="lede">Everything connected to this grade, in one place.</p><div class="stack"><div class="card"><span class="eyebrow">AI summary</span><p class="card-copy">Your research is strong. Connect evidence more explicitly to each insight.</p></div><div class="card"><span class="eyebrow">Instructor comment</span><p class="card-copy">“Show which observations support each conclusion.”</p></div></div>`),
   laptop: () => screen(`${header("Open on your laptop", "Feedback")}<p class="lede">Continue with the full assignment and feedback when a laptop is available.</p><div class="card"><span class="eyebrow">Nearby device</span><div class="card-title">Jordan’s MacBook Pro</div><p class="card-copy">Signed in to Coursewise · Available now</p></div><div class="actions"><button class="button primary" data-action="opened">Open on this Mac</button><button class="button secondary" data-action="copied">Copy secure link</button></div>`),
   schedule: () => { const d=state.draft||state.schedule; return screen(`${header("Choose your work time", "Plan")}<p class="lede">Coursewise suggests two one-hour sessions based on the deadline and your open time.</p><div class="stack">${scheduleFields(d, "picker")}</div><div class="actions"><button class="button primary" data-action="save-schedule">Save custom time</button><button class="button secondary" data-action="suggested">Use suggested plan</button></div>`); },
   edit: () => { const d=state.draft||state.schedule; return screen(`${header("Edit schedule", "Custom schedule")}<p class="lede">Choose when Coursewise should reserve time.</p><div class="stack">${scheduleFields(d,"picker")}</div><div class="actions"><button class="button primary" data-action="confirm-edit">Confirm changes</button></div>`); },
   picker: () => pickerView(),
-  saved: () => screen(`${header("Added to your Plan")}<div class="card notice"><span class="eyebrow">Coursewise Plan</span><div class="card-title">Prototype critique</div><p class="card-copy">${state.schedule.date} · ${state.schedule.time} · ${state.schedule.duration}</p></div><p class="saved-copy">${state.schedule.calendar==="No calendar"?"This work session is now in your Coursewise Plan.":`This work session is now in your Coursewise Plan and ${state.schedule.calendar}.`}</p><div class="actions"><button class="button primary" data-action="view-plan">View in Plan</button><button class="button secondary" data-tab="today">Back to Today</button></div>`),
+  saved: () => screen(`${header("Added to your Plan")}<div class="card notice"><span class="eyebrow">Coursewise Plan</span><div class="card-title">Prototype critique</div><p class="card-copy">${state.schedule.date} · ${state.schedule.time} · ${state.schedule.duration}</p></div><p class="saved-copy">${state.schedule.calendar==="No Calendar"?"This work session is now in your Coursewise Plan.":`This work session is now in your Coursewise Plan and ${state.schedule.calendar}.`}</p><div class="actions"><button class="button primary" data-action="view-plan">View in Plan</button><button class="button secondary" data-tab="today">Back to Today</button></div>`),
   detail: () => { const item=state.detail; return screen(`${header(item.title, item.kind==="plan"?"Plan":"Grades")}<span class="eyebrow">${item.when||item.score}</span><p class="lede" style="margin-top:10px">${item.copy}</p><div class="card"><div class="card-title">${item.kind==="plan"?"Work session details":"Grade details"}</div><p class="card-copy">${item.kind==="plan"?"Coursewise keeps this work block connected to the original assignment.":"This grade is included in your current course total."}</p></div>${item.kind==="plan"?'<div class="actions"><button class="button secondary" data-action="schedule">Edit this plan</button></div>':""}`); },
   course: () => screen(`${header("Interaction Design", "Courses")}<div class="card"><span class="eyebrow">DES 220 · Prof. Lin</span><div class="metric">86%</div><p class="card-copy">Grades, feedback, and plans for this course.</p></div>`),
   message: () => screen(`${header("Ready", "Back")}<div class="card notice"><div class="card-title">${state.message}</div></div><div class="actions"><button class="button primary" data-tab="today">Done</button></div>`),
@@ -57,7 +58,7 @@ function pickerView() {
   if(state.picker==="date") return screen(`${header("Choose a date", "Edit schedule")}<p class="lede">Select any day that works for you.</p>${calendarPicker(d.date)}`);
   if(state.picker==="time") return screen(`${header("Choose a start time", "Edit schedule")}<p class="lede">Scroll through the full day in 15-minute steps.</p>${wheelPicker(timeOptions(),d.time,"time")}`);
   if(state.picker==="duration") return screen(`${header("Choose a duration", "Edit schedule")}<p class="lede">Choose how long you want to work.</p>${wheelPicker(durationOptions(),d.duration,"duration")}`);
-  const opts=["Google Calendar","Apple Calendar","No calendar"];
+  const opts=["Google Calendar","Apple Calendar","No Calendar"];
   return screen(`${header("Choose a calendar", "Edit schedule")}<p class="lede">Select where to add this work session.</p><div class="stack">${opts.map(o=>choiceCard(o,d.calendar)).join("")}</div>`);
 }
 
@@ -80,14 +81,14 @@ function wheelPicker(options,selected,type) {
 }
 function choiceCard(o,selected) { return `<button class="card option ${selected===o?"selected":""}" data-choice="${escapeHtml(o)}"><div class="card-title">${o}</div></button>`; }
 function dateLabel(day) { const y=state.calendarMonth.getFullYear(),m=state.calendarMonth.getMonth(),date=new Date(y,m,Number(day)); return `${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][date.getDay()]}, ${date.toLocaleString("en-US",{month:"short"})} ${day}`; }
-function syncPlan() { state.addedPlan={id:"prototype",when:`${state.schedule.date} · ${state.schedule.time}`,title:"Prototype critique",copy:`DES 220 · Interaction Design · ${state.schedule.duration} work session`,warning:false}; }
+function syncPlan() { state.addedPlan={id:"prototype",type:"Planned work",course:"DES 220 · Interaction Design",when:`${state.schedule.date} · ${state.schedule.time}`,title:"Prototype critique",copy:`${state.schedule.duration} work session`,warning:false}; }
 
 function render() { document.getElementById("app").innerHTML = (views[state.screen]||views.today)(); window.scrollTo(0,0); }
 
 document.addEventListener("click", e => {
   const el=e.target.closest("button"); if(!el)return;
   if(el.dataset.action==="back") return back();
-  if(el.dataset.tab) return go(el.dataset.tab);
+  if(el.dataset.tab) { if(el.dataset.tab==="plan") state.showPlanConfirmation=false; return go(el.dataset.tab); }
   if(el.dataset.action==="grade") return go("grade");
   if(el.dataset.action==="feedback") return go("feedback");
   if(el.dataset.action==="laptop") return go("laptop");
@@ -102,7 +103,7 @@ document.addEventListener("click", e => {
   if(el.dataset.action==="confirm-edit") { state.schedule={...state.draft}; return go("schedule"); }
   if(el.dataset.action==="save-schedule") { state.schedule={...(state.draft||state.schedule)}; syncPlan(); return go("saved"); }
   if(el.dataset.action==="suggested") { state.schedule={date:"Wed, Oct 7",time:"7:00 PM",duration:"2 hours",calendar:"Google Calendar"}; syncPlan(); return go("saved"); }
-  if(el.dataset.action==="view-plan") return go("plan");
+  if(el.dataset.action==="view-plan") { state.showPlanConfirmation=true; return go("plan"); }
   if(el.dataset.plan) { const item=data.plans.find(x=>x.id===el.dataset.plan); if(item.id==="prototype"||item.id==="deadline") return go("schedule"); state.detail={...item,kind:"plan"}; return go("detail"); }
   if(el.dataset.gradeId) { const item=data.grades.find(x=>x.id===el.dataset.gradeId); if(item.id==="research")return go("grade"); state.detail={...item,kind:"grade"}; return go("detail"); }
 });

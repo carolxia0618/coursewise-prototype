@@ -37,6 +37,9 @@ button.card:hover { transform: translateY(-2px); border-color: #c9c4f6; }
 .warning { color: #9b6900; }
 .card-title { margin-top: 7px; font-weight: 700; }
 .course-label { margin-top: 8px; color: var(--muted); font-size: 12px; font-weight: 650; }
+.type-badge { display: inline-flex; width: max-content; margin-right: 8px; border-radius: 999px; padding: 4px 8px; font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.type-badge.planned { color: var(--brand-dark); background: var(--brand-soft); }
+.type-badge.due { color: #8a5900; background: var(--warning); }
 .card-copy { margin-top: 6px; color: var(--muted); font-size: 14px; }
 .metric { margin-top: 7px; color: var(--brand-dark); font-size: 22px; font-weight: 750; }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
