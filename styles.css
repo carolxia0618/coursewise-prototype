@@ -64,6 +64,11 @@ button.card:hover { transform: translateY(-2px); border-color: #c9c4f6; }
 .button.primary { background: var(--brand); color: white; }
 .button.primary:hover { background: var(--brand-dark); }
 .button.secondary { color: var(--brand-dark); background: white; border: 1px solid var(--line); }
+.button.danger { color: white; background: #b43b49; }
+.button.danger:hover { background: #97313d; }
+.button.remove-link { color: #a53543; background: transparent; border: 0; font-weight: 500; }
+.remove-actions { display: grid; }
+.remove-summary { border-color: #ead0d4; }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .nav { position: absolute; z-index: 5; left: 50px; bottom: 20px; width: 293px; height: 64px; display: flex; justify-content: center; gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 23px; background: rgba(255,255,255,.96); box-shadow: 0 8px 24px rgba(31,29,78,.09); backdrop-filter: blur(12px); }
 .nav button { min-width: 48px; border: 0; border-radius: 13px; padding: 4px 9px; color: var(--muted); background: transparent; cursor: pointer; font-size: 12px; }
@@ -76,6 +81,9 @@ button.card:hover { transform: translateY(-2px); border-color: #c9c4f6; }
 .plan-sync { display: flex; gap: 10px; align-items: flex-start; margin: -4px 0 14px; padding: 12px 14px; border-radius: 14px; color: #225c39; background: var(--success); font-size: 13px; }
 .plan-sync span { display: grid; place-items: center; flex: 0 0 22px; height: 22px; border-radius: 50%; color: white; background: #31865a; font-weight: 800; }
 .plan-sync p { margin-top: 2px; color: #3d6b4e; }
+.plan-sync.removed { color: #504f65; background: #efeff6; }
+.plan-sync.removed span { background: #6b6a7e; }
+.plan-sync.removed p { color: #626179; }
 .calendar-card { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: white; box-shadow: 0 7px 18px rgba(31,29,78,.06); }
 .calendar-head { display: grid; grid-template-columns: 36px 1fr 36px; align-items: center; text-align: center; margin-bottom: 14px; }
 .icon-button { width: 34px; height: 34px; border: 0; border-radius: 11px; color: var(--brand-dark); background: var(--brand-soft); cursor: pointer; font-size: 22px; }
