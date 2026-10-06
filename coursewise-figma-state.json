@@ -1,0 +1,135 @@
+{
+  "runId": "coursewise-prototype-2026-10-05",
+  "fileKey": "WawxZBJzDi6mPkqHmpVIuN",
+  "scope": "prototype-with-small-component-foundation",
+  "step": "usability-findings-confirmation-and-recommendation-complete",
+  "entities": {
+    "pages": {
+      "foundations": "0:1",
+      "mobilePrototype": "4:2",
+      "desktopContinuation": "5:2"
+    },
+    "collections": {
+      "primitives": "VariableCollectionId:3:2",
+      "semantic": "VariableCollectionId:3:18",
+      "dimensions": "VariableCollectionId:3:37"
+    },
+    "components": {
+      "buttonSet": "3:62",
+      "chip": "3:63",
+      "navItem": "3:65",
+      "coursewiseLogo": "25:6"
+    },
+    "styles": {
+      "display": "S:84e766dcb127cb7a3d4793373eaa185d14e9f939,",
+      "h1": "S:e80433ba6e9b8f78c31df53dfd8d86d594f4da4b,",
+      "h2": "S:fdc790af6ed8deea6fffec9fc3f878abd115583b,",
+      "title": "S:b74db1822f57522eabff590087d16edc0a2baac1,",
+      "body": "S:4f72e55d4de197674c2882d34b0cbe08b3f93cf8,",
+      "bodyStrong": "S:3d18fce442fb72ce9325134c928e20dbecbd0fc6,",
+      "caption": "S:d06409da985a64fb3bacbd67eb5fb14e8dab7922,",
+      "cardShadow": "S:5ba9fb69cb28bd92f066aac60baf1a688179486e,"
+    },
+    "screens": {
+      "today": "4:5",
+      "resultOverview": "4:49",
+      "feedback": "4:89",
+      "openOnLaptop": "4:118",
+      "planDeadline": "4:141",
+      "calendarConfirmation": "4:169",
+      "plan": "19:11",
+      "grades": "19:36",
+      "courses": "19:60",
+      "courseDetail": "19:87",
+      "sourceHighlights": "19:105",
+      "secureLinkCopied": "19:128",
+      "customSchedule": "19:139",
+      "editSchedule": "22:16",
+      "chooseDate": "44:287",
+      "chooseStartTime": "44:308",
+      "chooseDuration": "44:329",
+      "chooseCalendar": "44:350",
+      "dateEdited": "44:67",
+      "timeEdited": "44:122",
+      "durationEdited": "44:177",
+      "calendarEdited": "44:232",
+      "planAfterScheduleAdded": "62:125",
+      "portfolioWorkSession": "36:50",
+      "readingWorkSession": "36:74",
+      "usabilityQuizGrade": "36:98",
+      "journeyMapGrade": "36:119",
+      "participationGrade": "36:140",
+      "prototypePlannedWorkDetail": "78:132",
+      "prototypeDeadlineDetail": "78:168",
+      "researchSynthesisGradesDetail": "79:43",
+      "removePlannedWorkConfirmation": "83:93",
+      "planAfterWorkRemoved": "83:43",
+      "desktopPrototype": "5:82",
+      "desktopComplete": "19:166",
+      "desktopSource": "5:3"
+    }
+  },
+  "completedSteps": [
+    "file-created",
+    "discovery",
+    "foundations",
+    "components",
+    "mobile-flow",
+    "desktop-flow",
+    "prototype-links",
+    "visual-review",
+    "structural-audit",
+    "laptop-handoff-revision",
+    "deadline-planning-revision",
+    "revision-visual-review",
+    "full-navigation-expansion",
+    "interaction-coverage-audit",
+    "navigation-label-revision",
+    "coursewise-logo-component",
+    "canvas-reference-screenshots-received",
+    "navigation-state-normalization",
+    "logo-rollout-all-mobile-headers",
+    "back-header-cleanup",
+    "placeholder-content-expansion",
+    "plan-item-detail-flows",
+    "grade-item-detail-flows",
+    "bottom-navigation-geometry-normalization",
+    "schedule-field-pickers",
+    "schedule-changed-value-states",
+    "schedule-editing-roundtrip-audit",
+    "schedule-header-alignment-normalization"
+    ,"flexible-calendar-picker"
+    ,"full-day-time-wheel"
+    ,"expanded-duration-wheel"
+    ,"schedule-to-coursewise-plan-flow"
+    ,"jamie-user-name-normalization"
+    ,"course-code-context-on-today"
+    ,"direct-picker-routing-from-work-time"
+    ,"no-calendar-option"
+    ,"separate-default-and-post-save-plan-states"
+    ,"remove-laptop-handoff-feature"
+    ,"plan-card-type-and-course-labels"
+    ,"grade-card-posted-dates-and-course-labels"
+    ,"transient-plan-confirmation-state"
+    ,"roomier-main-tab-header-spacing"
+    ,"detail-page-logo-removal"
+    ,"larger-back-cta-controls"
+    ,"course-code-prefix-global-rule"
+    ,"distinct-course-card-identities"
+    ,"task-title-hierarchy-across-main-tabs"
+    ,"plain-regular-back-links"
+    ,"primary-tab-title-subtitle-spacing-refinement"
+    ,"complete-unique-plan-detail-content"
+    ,"complete-unique-grade-detail-content"
+    ,"plan-and-grade-card-detail-wiring"
+    ,"plural-grades-back-label"
+    ,"separate-today-two-step-and-grades-single-page-research-flows"
+    ,"planned-work-remove-entry"
+    ,"planned-work-remove-confirmation"
+    ,"post-removal-plan-state"
+    ,"recommendation-rationale-on-suggested-plan"
+    ,"strengthened-saved-session-confirmation"
+    ,"specific-post-save-plan-notice"
+  ],
+  "pendingValidations": []
+}

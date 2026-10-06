@@ -77,7 +77,10 @@ button.card:hover { transform: translateY(-2px); border-color: #c9c4f6; }
 .nav button.active::before { background: var(--brand); }
 .option.selected { border-color: var(--brand); background: var(--brand-soft); }
 .notice { background: var(--success); }
+.saved-session { border-color: #a3ddb7; box-shadow: none; }
 .saved-copy { margin-top: 15px; color: var(--muted); font-size: 14px; }
+.recommendation-reason { margin: -4px 0 16px; border-radius: 12px; padding: 10px 12px; color: var(--brand-dark); background: var(--brand-soft); font-size: 12px; }
+.recommendation-reason p { margin-top: 3px; color: var(--muted); font-size: 12px; }
 .plan-sync { display: flex; gap: 10px; align-items: flex-start; margin: -4px 0 14px; padding: 12px 14px; border-radius: 14px; color: #225c39; background: var(--success); font-size: 13px; }
 .plan-sync span { display: grid; place-items: center; flex: 0 0 22px; height: 22px; border-radius: 50%; color: white; background: #31865a; font-weight: 800; }
 .plan-sync p { margin-top: 2px; color: #3d6b4e; }
